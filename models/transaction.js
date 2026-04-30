@@ -19,6 +19,7 @@ const accountSchema = new mongoose.Schema(
         type: {
             type: String,
             require: true,
+            
         },
 
         balancePrevious: {

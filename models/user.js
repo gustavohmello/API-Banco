@@ -25,7 +25,8 @@ const UserSchema = new mongoose.Schema(
         },
 
         Telefone: {
-            type: Number,
+            type: Number, 
+            min:18,
             required: true,
             trim: true,
             unique: true,
@@ -38,7 +39,8 @@ const UserSchema = new mongoose.Schema(
 
         Ativo: {
             type: String,
-            required: true,
+            trim: true,
+            default: true,
         },
 
     }
