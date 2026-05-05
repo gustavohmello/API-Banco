@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const accountSchema = new mongoose.Schema(
+const transactionSchema = new mongoose.Schema(
     {
         AccountId: {
             type: Number,
@@ -47,4 +47,4 @@ const accountSchema = new mongoose.Schema(
     }
 );
 
-export default mongoose.model("Transaction", UserSchema);
+export default mongoose.model("Transaction", transactionSchema);

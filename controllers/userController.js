@@ -64,6 +64,15 @@ const getUserAndEmail = async (req,res,next) => {
     }
 }
 
+const getAccountUser = async (req,res,next) => {
+    try{
+        const user = await userServices.getAccountUser(req.params.id);
+        res.json({user});
+    }catch (error) {
+        next(error)
+    }
+}
+
 export default {
     createUser,
     listUser,
@@ -71,6 +80,7 @@ export default {
     updateUser,
     userDelet,
     getUserAndCpf,
-    getUserAndEmail
+    getUserAndEmail,
+    getAccountUser
 
 };

@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import conectDB from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
 // import transactionRoutes from "./routes/transactionRoutes.js";
-// import accountRoutes from "./routes/accountRoutes.js"
+import accountRoutes from "./routes/accountRoutes.js"
 
 
 dotenv.config();
@@ -18,7 +18,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/user", userRoutes);
-// app.use("/accout", accountRoutes);
+app.use("/account", accountRoutes);
 // app.use("/transaction", transactionRoutes);
 
 

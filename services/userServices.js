@@ -59,6 +59,18 @@ const getUserAndCpf = async (CPF) => {
     return user;
 }
 
+const getAccountUser = async (id) => {
+    const user = await User.find({id});
+
+    if (!user) {
+        const error = new Error("usuario não encontrado");
+        error.statusCode = 404;
+        throw error;
+    }
+
+    return user;
+}
+
 
 
 
@@ -68,5 +80,6 @@ export default {
     listUserID,
     updateUser,
     userDelet,
-    getUserAndCpf
+    getUserAndCpf,
+    getAccountUser
 }

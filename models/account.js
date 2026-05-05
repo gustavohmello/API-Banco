@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 
 const accountSchema = new mongoose.Schema(
     {
-        UserId: {
-            type: Number,
+        userId: {
+            type: String,
             required: true,
             trim: true,
         },
@@ -15,17 +15,18 @@ const accountSchema = new mongoose.Schema(
         },
 
         agency: {
-            type: String,
+            type: Number,
             required: true,
             trim: true,
         },
 
         type: {
-            Type:String,
+            type:String,
             required: true,
+            enum: ["corrente", "poupança"],
         },
 
-        balamce: {
+        balance: {
             type: Number,
             required: true,
         },
@@ -37,12 +38,12 @@ const accountSchema = new mongoose.Schema(
 
         active: {
             type: String,
-            required: true,
+            default: true,
         },
 
         blocked: {
-            type: String,
-            required: true
+            type: Boolean,
+           default: false,
         },
         
 
@@ -50,4 +51,4 @@ const accountSchema = new mongoose.Schema(
     }
 )
 
-export default mongoose.model("Account", UserSchema);
+export default mongoose.model("Account", accountSchema);
