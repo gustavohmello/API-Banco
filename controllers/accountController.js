@@ -27,11 +27,19 @@ const getAccountById = async (req, res, next) => {
     }
 };
 
-
+const getByNumberCount = async (req,res,next ) => {
+    try{
+        const Account =await accountServices.getByNumberCount(req.params.getByNumberCount);
+        res.json(Account);
+    }catch (error) {
+        next (error);
+    }
+} 
 
 export default {
     createAccount,
     getAccount,
-    getAccountById
+    getAccountById,
+    getByNumberCount
 
 }

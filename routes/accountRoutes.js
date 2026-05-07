@@ -8,6 +8,7 @@ const router = express.Router();
 router.post("/",accountController.createAccount);
 router.get("/",accountController.getAccount);
 router.get("/:id",accountController.getAccountById);
+router.get("/numberCount/:numberCount",accountController.getByNumberCount);
 
 
 

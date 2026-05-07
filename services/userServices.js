@@ -71,6 +71,22 @@ const getAccountUser = async (id) => {
     return user;
 }
 
+//testar a rota procurar usuario por email
+
+const getUserAndEmail = async (Email) => {
+    const user = await User.findOne({Email});
+
+    if (!user){
+    const error = new Error("usuario não encontrado");
+    error.statusCode = 404;
+    throw error;
+    }
+
+    return user;
+}
+
+
+
 
 
 
@@ -81,5 +97,6 @@ export default {
     updateUser,
     userDelet,
     getUserAndCpf,
-    getAccountUser
+    getAccountUser,
+    getUserAndEmail
 }
