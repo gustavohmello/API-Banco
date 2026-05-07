@@ -71,8 +71,6 @@ const getAccountUser = async (id) => {
     return user;
 }
 
-//testar a rota procurar usuario por email
-
 const getUserAndEmail = async (Email) => {
     const user = await User.findOne({Email});
 

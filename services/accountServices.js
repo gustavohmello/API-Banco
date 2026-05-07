@@ -25,10 +25,37 @@ const getByNumberCount = async (numberCount) => {
     return account;
  }
 
+ const getAccountByBalance = async (id) => {
+    
+    const account = await Account.findById(id);
+    const availabeBalance = account.balance + account.limit;
+    return {balance: account.balance, limit: account.limit, availabeBalance}
+    
+    
+
+ }
+
+ const postAccountDeposit = async (id,data) => {
+
+    const account = await Account.findById(id);
+
+    const {value, descripition} = data;
+
+
+    account.balance += Number (value);
+    await account.save();
+
+    return account;
+    
+ }
+
+
 export default {
     createAccount,
     getAccount,
     getAccountById,
-    getByNumberCount
+    getByNumberCount,
+    getAccountByBalance,
+    postAccountDeposit
 
 }

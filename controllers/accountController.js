@@ -36,10 +36,32 @@ const getByNumberCount = async (req,res,next ) => {
     }
 } 
 
+const getAccountByBalance = async (req,res,next) => {
+    try{
+        const Account= await accountServices.getAccountByBalance(req.params.id);
+        res.json(Account);
+    }catch (error){
+        next (error);
+    }
+}
+
+const postAccountDeposit = async (req,res, next) => {
+    try{
+        const Account= await accountServices.postAccountDeposit(req.params.id, req.body);
+        res.json(Account);
+    }catch (error){
+        next(error);
+    }
+}
+
+    
+
 export default {
     createAccount,
     getAccount,
     getAccountById,
-    getByNumberCount
+    getByNumberCount,
+    getAccountByBalance,
+    postAccountDeposit
 
 }
