@@ -1,4 +1,5 @@
 import Account from "../models/account.js";
+import transaction from "../models/transaction.js";
 
 const createAccount = async (dataAccouts) => {
     const { userId, numberCount, agency, type, balance, limit } = dataAccouts;
@@ -23,31 +24,58 @@ const getByNumberCount = async (numberCount) => {
     }
 
     return account;
- }
+}
 
- const getAccountByBalance = async (id) => {
-    
+const getAccountByBalance = async (id) => {
+
     const account = await Account.findById(id);
     const availabeBalance = account.balance + account.limit;
-    return {balance: account.balance, limit: account.limit, availabeBalance}
-    
-    
+    return { balance: account.balance, limit: account.limit, availabeBalance }
 
- }
 
- const postAccountDeposit = async (id,data) => {
+
+}
+
+//terminar o deposito !!
+
+const postAccountDeposit = async (id, data) => {
 
     const account = await Account.findById(id);
 
-    const {value, descripition} = data;
+    const { value, descripition } = data;
+
+    if (!account) {
+        throw new ERROR("Account not found");
+    }
+
+    if (account.status !== "active") {
+        throw new ERROR("The account is blocked");
+    }
+    if (account.isBlocked) {
+        throw new ERROR("The account is blocked");
+    }
+
+    const previousBalance = account.balance;
 
 
-    account.balance += Number (value);
+    account.balance += value;
     await account.save();
 
-    return account;
-    
- }
+    await transaction.create({
+
+        AccountId: id,
+        type: "deposit",
+        amount: value,
+        descripition,
+        date: new DATE()
+
+    })
+
+    return {
+        mensage: "Deposit sucesfully completed", previousBalance, depositedValue: value, currentBalence: account.balance
+    }
+
+};
 
 
 export default {

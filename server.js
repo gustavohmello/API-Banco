@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import conectDB from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
-// import transactionRoutes from "./routes/transactionRoutes.js";
+import transactionRoutes from "./routes/transactionRoutes.js";
 import accountRoutes from "./routes/accountRoutes.js"
 
 
@@ -19,7 +19,7 @@ app.get("/", (req, res) => {
 
 app.use("/user", userRoutes);
 app.use("/account", accountRoutes);
-// app.use("/transaction", transactionRoutes);
+app.use("/transaction", transactionRoutes);
 
 
 const startServer = async () => {

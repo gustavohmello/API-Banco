@@ -1,5 +1,11 @@
-// import Transaction from "../models/transaction.js";
+import Transaction from "../models/transaction.js";
 
-// export default {
+const getTransaction = async () => {
+    return await Transaction.find();
+} 
 
-// }
+
+export default {
+    getTransaction
+
+ }
