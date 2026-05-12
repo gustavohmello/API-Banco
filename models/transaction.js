@@ -3,38 +3,42 @@ import mongoose from "mongoose";
 const transactionSchema = new mongoose.Schema(
     {
         AccountId: {
-            type: Number,
+            type: mongoose.Schema.Types.ObjectId,
             required: true,
             trim: true,
-            unique: true,
         },
 
         targetAccountId: {
-            type: Number,
-            unique: true,
+            type: String,
             trim: true,
+            default: ""
         },
 
         type: {
             type: String,
-        
-            
+
+
+        },
+
+        value: {
+            type: Number
         },
 
         balancePrevious: {
             type: Number,
         },
 
-        currentPalance: {
+        currentBalance: {
             type: Number,
         },
 
-        descripition: {
+        description: {
             type: String,
         },
 
         status: {
             type: String,
+            default: ""
         },
 
 

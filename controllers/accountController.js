@@ -27,45 +27,44 @@ const getAccountById = async (req, res, next) => {
     }
 };
 
-const getByNumberCount = async (req,res,next ) => {
-    try{
-        const Account =await accountServices.getByNumberCount(req.params.getByNumberCount);
+const getByNumberCount = async (req, res, next) => {
+    try {
+        const Account = await accountServices.getByNumberCount(req.params.getByNumberCount);
         res.json(Account);
-    }catch (error) {
-        next (error);
-    }
-} 
-
-const getAccountByBalance = async (req,res,next) => {
-    try{
-        const Account= await accountServices.getAccountByBalance(req.params.id);
-        res.json(Account);
-    }catch (error){
-        next (error);
+    } catch (error) {
+        next(error);
     }
 }
 
-const postAccountDeposit = async (req,res, next) => {
-    try{
-       const {id} = req.params;
-       const { value, descripition } = req.body;
-       console.log(id);
-       console.log(descripition);
-       console.log(value);
-       if (!value || value <= 0){
-        return res.status(400).json({ error: "Tem que ser maior que zero" });
-       }
+const getAccountByBalance = async (req, res, next) => {
+    try {
+        const Account = await accountServices.getAccountByBalance(req.params.id);
+        res.json(Account);
+    } catch (error) {
+        next(error);
+    }
+}
 
-       const result = await accountServices.postAccountDeposit(id, req.body);
-       res.status(200).json(result);
+const postAccountDeposit = async (req, res, next) => {
+    try {
+        const result = await accountServices.postAccountDeposit(req.params.id, req.body);
+        res.status(201).json(result);
+    } catch (error) {
+        res.status(400).json({ error });
+    }
+}
+
+const transferMoneyAccount = async (req,res, next) => {
+    try{
+        const Account = await accountServices.transferMoneyAccount(req.params.id, req.body);
+        res.status(201).json(Account);
     }catch (error){
-        res.status(400).json({ error: error.mensage});
+        res.status(400).json({error});
     }
 }
 
 
 
-       
 
 export default {
     createAccount,
@@ -73,6 +72,7 @@ export default {
     getAccountById,
     getByNumberCount,
     getAccountByBalance,
-    postAccountDeposit
+    postAccountDeposit,
+    transferMoneyAccount
 
 }

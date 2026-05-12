@@ -33,30 +33,31 @@ const getAccountByBalance = async (id) => {
     return { balance: account.balance, limit: account.limit, availabeBalance }
 
 
- 
+
 }
 
 const postAccountDeposit = async (id, data) => {
-
     const account = await Account.findById(id);
 
     const { value, descripition } = data;
 
     if (!account) {
-        throw new ERROR("Account not found");
+        throw new Error("Account not found");
     }
 
-    if (account.status !== "active") {
-        throw new ERROR("The account is blocked");
+    if (account.active === false) {
+        throw new Error("The account is blocked");
     }
 
-    account.balance += value;
+    account.balance = account.balance + value;
     await account.save();
 
     return await Transaction.create({
         AccountId: id,
         type: "deposit",
-        descripition: descripition,
+        value: Number(value),
+        description: descripition,
+        currentBalance: account.balance
     })
 };
 

@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const accountSchema = new mongoose.Schema(
     {
         userId: {
-            type: String,
+            type: mongoose.Schema.Types.ObjectId,
             required: true,
             trim: true,
         },
@@ -37,7 +37,7 @@ const accountSchema = new mongoose.Schema(
         },
 
         active: {
-            type: String,
+            type: Boolean,
             default: true,
         },
 
