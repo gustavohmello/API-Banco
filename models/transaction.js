@@ -11,36 +11,30 @@ const transactionSchema = new mongoose.Schema(
 
         targetAccountId: {
             type: Number,
-            required: true,
             unique: true,
             trim: true,
         },
 
         type: {
             type: String,
-            require: true,
+        
             
         },
 
         balancePrevious: {
             type: Number,
-            required: true,
         },
 
         currentPalance: {
             type: Number,
-            required: true,
         },
 
         descripition: {
             type: String,
-            required: true,
         },
 
         status: {
             type: String,
-            required: true,
-            unique: true,
         },
 
 

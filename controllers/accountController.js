@@ -48,12 +48,15 @@ const getAccountByBalance = async (req,res,next) => {
 const postAccountDeposit = async (req,res, next) => {
     try{
        const {id} = req.params;
-       const { valor, descricao } = req. body;
-       if (!valor || valor <= 0){
+       const { value, descripition } = req.body;
+       console.log(id);
+       console.log(descripition);
+       console.log(value);
+       if (!value || value <= 0){
         return res.status(400).json({ error: "Tem que ser maior que zero" });
        }
 
-       const result = await accountServices.postAccountDeposit(id, valor, descricao);
+       const result = await accountServices.postAccountDeposit(id, req.body);
        res.status(200).json(result);
     }catch (error){
         res.status(400).json({ error: error.mensage});
@@ -62,7 +65,7 @@ const postAccountDeposit = async (req,res, next) => {
 
 
 
-    
+       
 
 export default {
     createAccount,

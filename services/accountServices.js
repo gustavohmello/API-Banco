@@ -1,5 +1,5 @@
 import Account from "../models/account.js";
-import transaction from "../models/transaction.js";
+import Transaction from "../models/transaction.js";
 
 const createAccount = async (dataAccouts) => {
     const { userId, numberCount, agency, type, balance, limit } = dataAccouts;
@@ -33,10 +33,8 @@ const getAccountByBalance = async (id) => {
     return { balance: account.balance, limit: account.limit, availabeBalance }
 
 
-
+ 
 }
-
-//terminar o deposito !!
 
 const postAccountDeposit = async (id, data) => {
 
@@ -51,30 +49,15 @@ const postAccountDeposit = async (id, data) => {
     if (account.status !== "active") {
         throw new ERROR("The account is blocked");
     }
-    if (account.isBlocked) {
-        throw new ERROR("The account is blocked");
-    }
-
-    const previousBalance = account.balance;
-
 
     account.balance += value;
     await account.save();
 
-    await transaction.create({
-
+    return await Transaction.create({
         AccountId: id,
         type: "deposit",
-        amount: value,
-        descripition,
-        date: new DATE()
-
+        descripition: descripition,
     })
-
-    return {
-        mensage: "Deposit sucesfully completed", previousBalance, depositedValue: value, currentBalence: account.balance
-    }
-
 };
 
 
