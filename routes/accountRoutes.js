@@ -17,6 +17,6 @@ router.get("/:id/statement", accountController.getStatement);
 router.post("/:id/withdraw/simulate", accountController.postSimulateWithdraw);
 router.post("/transfer/simulate", accountController.postSimulateTransfer);
 
-
+ 
 
 export default router;
