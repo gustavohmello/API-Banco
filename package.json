@@ -2,7 +2,7 @@
   "name": "api-express-banco",
   "version": "1.0.0",
   "type": "module",
-  "main": "server.js",
+  "main": "server.js", 
   "scripts": {
      "dev": "nodemon server.js",
      "start": "nodemon server.js"
