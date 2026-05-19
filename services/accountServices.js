@@ -121,7 +121,7 @@ const postSimulateWithdraw = async (id, value) => {
     return { canWithdraw, currentBalance: account.balance, withdrawalValue: value, balanceAfter: canWithdraw ? account.balance - value : account.balance }
 };
 
-
+ 
 
 export default {
     createAccount,
