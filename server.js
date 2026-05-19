@@ -4,7 +4,8 @@ import conectDB from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
 import transactionRoutes from "./routes/transactionRoutes.js";
 import accountRoutes from "./routes/accountRoutes.js";
-import adminRoutes from "./routes/adminRoutes.js"
+import adminRoutes from "./routes/adminRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
 
 
 dotenv.config();
@@ -22,6 +23,10 @@ app.use("/user", userRoutes);
 app.use("/account", accountRoutes);
 app.use("/transaction", transactionRoutes);
 app.use("/admin", adminRoutes);
+
+// new routes "autenticação"
+
+app.use("/auth", authRoutes);
 
 
 const startServer = async () => {
