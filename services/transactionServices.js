@@ -1,8 +1,4 @@
-import user from "../models/user.js";
-import Transaction from "../models/Transaction.js";
-import accounts from "../models/account.js";
-
-
+import Transaction from "../models/transaction.js";
 
 const getAllTrans = async () => {
     return await Transaction.find().sort({ date: -1 });

@@ -61,6 +61,67 @@ const postAccountDeposit = async (id, data) => {
     })
 };
 
+const withdraw = async (id, value, description) => {
+    const account = await Account.findById(id);
+    if (!account) throw new Error("Account not found");
+    if (account.status !== "active" || account.blocked) throw new Error("Account restricted");
+
+    const available = account.type === "poupanca" ? account.balance : account.balance + account.limit;
+    if (value > available) throw new Error("Insufficient funds");
+
+    const previousBalance = account.balance;
+    account.balance -= value;
+    await account.save();
+
+    await Transaction.create({
+        accountId: id,
+        type: "saque",
+        amount: value,
+        previousBalance,
+        currentBalance: account.balance,
+        description,
+        date: new Date()
+    });
+
+    return { message: "Withdrawal successful", currentBalance: account.balance };
+}
+
+const postTransfer = async (fromId, toId, value, description) => {
+    const fromAcc = await Account.findById(fromId);
+    const toAcc = await Account.findById(toId);
+
+    if (!fromAcc || !toAcc) throw new Error("Accounts not found");
+    if (fromAcc.status !== 'active' || toAcc.status !== 'active') throw new Error("Accounts must be active");
+
+    const available = fromAcc.type === 'poupanca' ? fromAcc.balance : fromAcc.balance + fromAcc.limit;
+    if (value > available) throw new Error("Insufficient funds");
+
+    fromAcc.balance -= value;
+    toAcc.balance += value;
+
+    await fromAcc.save();
+    await toAcc.save();
+
+    await Transaction.create([
+        { accountId: fromId, type: "transferencia_enviada", amount: value, description },
+        { accountId: toId, type: "transferencia_recebida", amount: value, description }
+    ])
+
+    return { message: "Transfer successful", fromBalance: fromAcc.balance, toBalance: toAcc.balance };
+}
+
+const getStatement = async (id) => {
+    return await Transaction.find({ accountId: id }).sort({ date: -1 })
+}
+
+const postSimulateWithdraw = async (id, value) => {
+    const account = await Account.findById(id);
+    const available = account.type === 'poupanca' ? account.balance : account.balance + account.limit;
+    const canWithdraw = value <= available && value > 0;
+    return { canWithdraw, currentBalance: account.balance, withdrawalValue: value, balanceAfter: canWithdraw ? account.balance - value : account.balance }
+};
+
+
 
 export default {
     createAccount,
@@ -68,6 +129,12 @@ export default {
     getAccountById,
     getByNumberCount,
     getAccountByBalance,
-    postAccountDeposit
+    postAccountDeposit,
+    withdraw,
+    postTransfer,
+    getStatement,
+    postSimulateWithdraw,
+    getAllAcco: () => Account.find(), getIdAcco: (id) => Account.findById(id)
+
 
 }
