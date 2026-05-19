@@ -35,5 +35,5 @@ const startServer = async () => {
         console.log("ERRO ao iniciar o servidor:", error.menssage);
     }
 };
- 
+  
 startServer();
